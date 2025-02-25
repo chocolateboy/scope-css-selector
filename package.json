@@ -1,0 +1,66 @@
+{
+    "name": "scope-css-selector",
+    "version": "0.0.1",
+    "description": "Automatically :scope CSS selectors",
+    "author": "chocolateboy",
+    "repository": "https://github.com/chocolateboy/scope-css-selector",
+    "license": "MIT",
+    "main": "dist/cjs/index.cjs",
+    "module": "dist/esm/index.mjs",
+    "unpkg": "dist/umd/index.umd.min.js",
+    "jsdelivr": "dist/umd/index.umd.min.js",
+    "types": "dist/index.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "build": "rollup -c --exports named",
+        "build:doc": "toc-md README.md",
+        "build:dts": "tsc --declaration --emitDeclarationOnly --noImplicitAny --noUnusedLocals --noUnusedParameters --strict",
+        "build:release": "cross-env NODE_ENV=production run-s build:dts build build:doc",
+        "clean": "shx rm -rf dist types",
+        "prepublishOnly": "run-s clean build:release",
+        "rebuild": "run-s clean build",
+        "test": "run-s build test:run",
+        "test:run": "vitest run --dir test",
+        "typecheck": "tsc-files --noEmit --noImplicitAny --noUnusedLocals --noUnusedParameters --strict"
+    },
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/esm/index.mjs",
+            "require": "./dist/cjs/index.cjs"
+        }
+    },
+    "files": [
+        "dist/{cjs,esm,umd,index.d.ts}"
+    ],
+    "browserslist": "maintained node versions",
+    "dependencies": {
+        "css-what": "^6.1.0"
+    },
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^16.0.0",
+        "cross-env": "^7.0.3",
+        "esbuild": "^0.25.0",
+        "npm-run-all2": "^7.0.2",
+        "rollup": "^4.34.8",
+        "rollup-plugin-auto-external": "^2.0.0",
+        "rollup-plugin-dts": "^6.1.1",
+        "rollup-plugin-esbuild": "^6.1.1",
+        "rollup-plugin-filesize": "^10.0.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "shx": "^0.3.4",
+        "source-map-support": "^0.5.21",
+        "toc-md-alt": "^0.4.6",
+        "tsc-files": "^1.1.4",
+        "typescript": "^5.7.3",
+        "vitest": "^3.0.7"
+    },
+    "keywords": [
+        "css",
+        "scope",
+        "scoped",
+        "selector",
+        "selectors"
+    ]
+}
