@@ -1,9 +1,9 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import terser          from '@rollup/plugin-terser'
 import autoExternal    from 'rollup-plugin-auto-external'
 import { dts }         from 'rollup-plugin-dts'
 import esbuild         from 'rollup-plugin-esbuild'
 import size            from 'rollup-plugin-filesize'
-import { terser }      from 'rollup-plugin-terser'
 import pkg             from './package.json' with { type: 'json' }
 
 const ENTRY = './src/index.ts'
