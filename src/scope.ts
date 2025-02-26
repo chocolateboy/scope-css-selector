@@ -1,13 +1,5 @@
 import { type Selector, SelectorType, parse, stringify } from 'css-what'
 
-// a helper function which prepends the :scope pseudoclass to every top-level
-// (i.e. comma-separated) expression within a selector. as well as making
-// selectors sane [1], it allows jQuery like top-level ">", e.g.:
-//
-//   find(el, "> a[href]")
-//
-// [1] https://developer.rackspace.com/blog/using-querySelector-on-elements/
-
 export type Cache = Map<string, string>
 
 export interface Options {

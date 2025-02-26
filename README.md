@@ -13,7 +13,7 @@
   - [Why?](#why)
 - [TYPES](#types)
 - [EXPORTS](#exports)
-  - [scope (default)](#scope-default)
+  - [scope (default)](#scope)
   - [scoper](#scoper)
 - [DEVELOPMENT](#development)
 - [COMPATIBILITY](#compatibility)
@@ -57,15 +57,15 @@ This library exports a helper function which prepends the `:scope` pseudoclass
 to every top-level (i.e. comma-separated) expression within a CSS selector
 which isn't already anchored to `:root` or `:scope`.
 
-It works around a [bug][resig] in the implementation of DOM queries in
-JavaScript, which — contrary to appearances — are not evaluated relative to the
-context element. In addition, it allows selectors to be written in a
-"context-free" way similar to jQuery and other DOM libraries, e.g.:
+It works around a [bug][resig] in the spec of DOM queries in JavaScript, which
+— contrary to appearances — are not evaluated relative to the context element.
+In addition, it allows selectors to be written in a "context-free" way similar
+to jQuery and other DOM libraries, e.g.:
 
     find(el, '> div.foo') // ":scope > div.foo"
 
 The `scope` function is a pure function which operates on the syntax tree of
-the selector and doesn't depend on the DOM in any way. As such it is more
+the selector and doesn't depend on the DOM in any way. As such, it is more
 robust than regexp-based solutions, which typically don't attempt to handle
 (comma-separated) selector lists, and safer than solutions which
 [modify the DOM][sizzle-dom-mutation] or [patch host objects][patch-html-element]
@@ -77,7 +77,8 @@ builder function ([`scoper`](#scoper)) which can be used to create a custom
 
 ## Why?
 
-Because the default behavior of `querySelector` and `querySelectorAll` is broken<sup>[[1]][resig]</sup>:
+Because the default behavior of `querySelector` and `querySelectorAll` is
+broken<sup>[[1]][resig]</sup>:
 
 > As it stands DOM Element-rooted queries are borderline useless to libraries –
 > and users. Their default behavior is unexpected and confusing.
@@ -123,7 +124,7 @@ console.log(result.id) // "ok"
 
 Note that, as shown in this example, this library is intended to be used by DOM
 libraries and helper functions to automatically scope selectors, rather than as
-a way to manually fix literal selectors in user code.
+a way to manually fix selector literals in user code.
 
 # TYPES
 
@@ -139,15 +140,16 @@ interface Options {
 
 # EXPORTS
 
+<a name="scope"></a>
 ## scope (default)
 
-- **Type**: `(selector: string, options?: Options) ⇒ string`
+- **Type**: `(selector: string, options?: Options) => string`
 - **Alias**: `scope`
 
 ```javascript
 import scope from 'scope-css-selector'
 
-scope('div.foo, :root span.bar, > baz') // ":scope div.foo, :root span.bar, :scope > baz"
+scope('div.foo, :root span.bar, > .baz') // ":scope div.foo, :root span.bar, :scope > .baz"
 ```
 
 Takes a CSS selector and returns the selector with `:scope` prepended to each
@@ -174,7 +176,7 @@ Map is supplied, it is used to cache the results.
 
 ## scoper
 
-- **Type**: `(options: Options) ⇒ (selector: string, options?: Options) ⇒ string`
+- **Type**: `(options: Options) => (selector: string, options?: Options) => string`
 
 ```javascript
 import { scoper } from 'scope-css-selector'
@@ -189,7 +191,7 @@ console.log(cache) // Map (1) { "div.foo" => ":scope div.foo" }
 Returns a custom `scope` function which can be used to scope CSS selectors with
 the specified [options](#options) baked in.
 
-As with the default `scope` function, the default options can be overriden by
+As with the default `scope` function, the default options can be overridden by
 supplying new options as the second argument:
 
 ```javascript
@@ -235,9 +237,9 @@ The following NPM scripts are available:
 <!-- TOC:ignore -->
 ## Libraries
 
-- [element-qsa-scope](https://github.com/jonathantneal/element-qsa-scope) (regex-based, doesn't work with selector lists)
-- [scoped-queryselectorall](https://github.com/lski/scoped-queryselectorall) (mutates the DOM)
-- [scopedQuerySelectorShim](https://github.com/lazd/scopedQuerySelectorShim) (mutates the DOM, patches HTMLElement)
+- [element-qsa-scope](https://github.com/jonathantneal/element-qsa-scope)
+- [scoped-queryselectorall](https://github.com/lski/scoped-queryselectorall)
+- [scopedQuerySelectorShim](https://github.com/lazd/scopedQuerySelectorShim)
 
 <!-- TOC:ignore -->
 ## Articles
