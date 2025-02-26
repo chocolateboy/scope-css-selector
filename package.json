@@ -32,7 +32,7 @@
         }
     },
     "files": [
-        "dist/{cjs,esm,umd,index.d.ts}"
+        "dist"
     ],
     "browserslist": "maintained node versions",
     "dependencies": {
