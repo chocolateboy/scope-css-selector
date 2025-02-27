@@ -47,11 +47,13 @@ const cjs = {
 const esm = {
     input: ENTRY,
     plugins: [$esbuild, $external],
+    external,
     output: {
         dir: 'dist/esm',
         entryFileNames: '[name].mjs',
         format: 'esm',
         preserveModules: true,
+        sourcemap: isDev,
         banner,
     }
 }
@@ -90,6 +92,6 @@ const dtsBundle = {
     plugins: [$dts],
 }
 
-const config = isDev ? cjs : [cjs, esm, bundle, dtsBundle]
+const config = isDev ? [cjs, esm] : [dtsBundle, cjs, esm, bundle]
 
 export default config
